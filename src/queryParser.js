@@ -1,5 +1,5 @@
 const parseQuery = (query) => {
-	const r = /SELECT (.+?) FROM (.+?)(?: WHERE (.*))?$/i;
+	const r = /SELECT (.+?) FROM (.+?)(?: WHERE (.*))?$/;
 	const match = query.match(r);
 
 	if (match) {
