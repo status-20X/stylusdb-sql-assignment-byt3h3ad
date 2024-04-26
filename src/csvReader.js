@@ -1,20 +1,20 @@
-const fs = require('node:fs');
-const csv = require('csv-parser');
+const fs = require("node:fs");
+const csv = require("csv-parser");
 
 function readCSV(filePath) {
-    const results = [];
+	const results = [];
 
-    return new Promise((resolve, reject) => {
-        fs.createReadStream(filePath)
-            .pipe(csv())
-            .on('data', (data) => results.push(data))
-            .on('end', () => {
-                resolve(results);
-            })
-            .on('error', (error) => {
-                reject(error);
-            });
-    });
+	return new Promise((resolve, reject) => {
+		fs.createReadStream(filePath)
+			.pipe(csv())
+			.on("data", (data) => results.push(data))
+			.on("end", () => {
+				resolve(results);
+			})
+			.on("error", (error) => {
+				reject(error);
+			});
+	});
 }
 
 module.exports = readCSV;
