@@ -30,7 +30,8 @@
 		"test:20": "jest --testPathPattern=./tests/step-20",
 		"test-verbose": "jest --verbose",
 		"server": "node ./src/server.js",
-		"check": "npx @biomejs/biome check --apply src/."
+		"check": "npx @biomejs/biome check --apply src/.",
+		"format": "npx @biomejs/biome format --write ."
 	},
 	"bin": {
 		"stylusdb-cli": "node ./src/cli.js"
