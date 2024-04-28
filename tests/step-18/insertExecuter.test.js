@@ -1,6 +1,6 @@
-const { executeINSERTQuery } = require("../../src/index");
+const { executeINSERTQuery } = require("../../src/queryExecutor");
 const { readCSV, writeCSV } = require("../../src/csvReader");
-const fs = require("fs");
+const fs = require("node:fs");
 
 // Helper function to create grades.csv with initial data
 async function createGradesCSV() {

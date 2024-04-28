@@ -1,6 +1,6 @@
-const { executeINSERTQuery } = require("../../src/index");
+const { executeINSERTQuery } = require("../../src/queryExecutor");
 const { readCSV, writeCSV } = require("../../src/csvReader");
-const fs = require("fs");
+const fs = require("node:fs");
 
 // Helper function to create grades.csv with initial data
 async function createGradesCSV() {
@@ -10,6 +10,8 @@ async function createGradesCSV() {
 		{ student_id: "3", course: "Mathematics", grade: "C" },
 	];
 	await writeCSV("grades.csv", initialData);
+	const updatedData = await readCSV("grades.csv");
+	console.log(updatedData);
 }
 
 // Test to INSERT a new grade and verify

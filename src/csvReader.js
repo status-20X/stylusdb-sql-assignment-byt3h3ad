@@ -1,13 +1,30 @@
 const fs = require("node:fs");
 const csv = require("csv-parser");
 
-function readCSV(filePath) {
-	const results = [];
+const convertData = (data) => {
+	let writeContent = "";
+	let rowsInserted = 0;
 
+	for (const row of data) {
+		for (const key in row) {
+			writeContent += `${row[key]},`;
+		}
+		writeContent = writeContent.slice(0, -1);
+		writeContent += "\n";
+		rowsInserted += 1;
+	}
+
+	return { writeContent, rowsInserted };
+};
+
+const readCSV = (filePath) => {
+	const results = [];
 	return new Promise((resolve, reject) => {
 		fs.createReadStream(filePath)
 			.pipe(csv())
-			.on("data", (data) => results.push(data))
+			.on("data", (data) => {
+				results.push(data);
+			})
 			.on("end", () => {
 				resolve(results);
 			})
@@ -15,6 +32,37 @@ function readCSV(filePath) {
 				reject(error);
 			});
 	});
-}
+};
 
-module.exports = readCSV;
+const writeCSV = async (filePath, data) => {
+	const { writeContent, rowsInserted } = convertData(data);
+
+	let fields = "";
+	for (const key in data[0]) {
+		fields += `${key},`;
+	}
+	fields = fields.slice(0, -1);
+	fields += `\n${writeContent}`;
+
+	fs.writeFile(filePath, fields, (err) => {
+		if (err) {
+			console.error(err);
+		} else {
+		}
+	});
+};
+
+const updateCSV = async (filePath, data) => {
+	const { writeContent, rowsInserted } = convertData(data);
+
+	fs.appendFile(filePath, writeContent, (err) => {
+		if (err) {
+			console.error(err);
+		} else {
+		}
+	});
+
+	return { rowsInserted };
+};
+
+module.exports = { readCSV, writeCSV, updateCSV };
